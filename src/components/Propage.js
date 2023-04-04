@@ -31,7 +31,7 @@ export default function Propage() {
       localStorage.setItem('items',JSON.stringify(items))
         // dispatch(additem(id,title,price,category,image,quantity));
         setN(1);
-        window.location.reload(false);
+        window.location.reload();
   }
   function decre() {
         if(n>1) {
