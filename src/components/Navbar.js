@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
 export default function Navbar() {
-    let items = JSON.parse(localStorage.getItem("items"))
+    let items = JSON.parse(localStorage.getItem("items")) || []
     var totalqty = items.reduce((acc,i) => {
         return acc+i.quantity
     },0)
