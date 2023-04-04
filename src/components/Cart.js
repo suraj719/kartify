@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './home.css'
 export default function Cart() {
-     let items = JSON.parse(localStorage.getItem("items"))
+     let items = JSON.parse(localStorage.getItem("items")) || []
     
     const [data, setData] = useState([])
 
