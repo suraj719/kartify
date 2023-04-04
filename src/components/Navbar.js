@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
 export default function Navbar() {
-    let items = JSON.parse(localStorage.getItem("items"))
+    let items = JSON.parse(localStorage.getItem("items")) || []
     var totalqty = items.reduce((acc,i) => {
         return acc+i.quantity
     },0)
@@ -16,7 +16,7 @@ export default function Navbar() {
                 </Link>
             </div>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
+            <i className="fa-solid fa-bars" style={{color:"white"}}></i>
         </button>
         <div className='collapse navbar-collapse text-center' id="navbarSupportedContent">
             <ul className='navbar-nav ms-5'>
@@ -41,14 +41,13 @@ export default function Navbar() {
       </div>
       
         <div className='rytitems d-flex'>
-            <div className='me-4 mt-'>
+            <div className='me-4'>
                 <Link to='/cart'>
-                    <div className="cntitems"><span>{totalqty}</span></div>
+                    <div className="cntitems">{totalqty}</div>
                     <img src="../images/cart.png" alt="cart-img" style={{height:"50px"}}/>
                 </Link>
-                
             </div> 
-            <div className="me-5">
+            <div className="me-5 userimg">
                 <img src="../images/avatar.png" alt="userimg" style={{height:"50px"}}/>
             </div>   
         </div>

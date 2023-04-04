@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-// import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom'
-// import { additem } from '../redux/action';
+import swal from 'sweetalert';
 import './product.css'
 export default function Propage() {
   const location = useLocation();
@@ -9,29 +8,37 @@ export default function Propage() {
   var tnurl1,tnurl2,tnurl3;
   let [n,setN] = useState(1)
   let [image,setImage] = useState(1)
-  // const dispatch = useDispatch();
   let items = JSON.parse(localStorage.getItem("items")) || [];
-//  let [items,setItems] = useState(localStorage.getItem('items')|| [])
+  var totalqty = items.reduce((acc,i) => {
+    return acc+i.quantity
+},0)
 
-  function addtocart(id,title,price,category,image,quantity) {
-        // const newitem =
+  function addtocart(title,price,category,image,quantity) {
+   
        items = [
           ...items,
           {
-              id:id,
+              id: new Date().getTime(),
               title:title,
               price:price,
               category:category,
               image:image,
               quantity:quantity,
-              
           }
        ]
-      // setItems(...items,newitem)
+       totalqty = items.reduce((acc,i) => {
+        return acc+i.quantity
+    },0)
       localStorage.setItem('items',JSON.stringify(items))
-        // dispatch(additem(id,title,price,category,image,quantity));
         setN(1);
-        window.location.reload(false);
+      document.querySelector('.cntitems').innerHTML=`${totalqty}`
+      if(n===1) {
+        swal(`${n} item added to cart`, "Go to cart to checkout", "success")
+      }
+      else {
+        swal(`${n} items added to cart`, "Go to cart to checkout", "success");
+      }
+      setN(1);
   }
   function decre() {
         if(n>1) {
@@ -125,10 +132,11 @@ export default function Propage() {
                                 </div>
                             </div>
                        
-                          <div className='addtocart ms-5 text-center pt-2 rounded' onClick= {() => addtocart(data.id,data.title,data.price,data.category,data.image,n)}>
-                            <img src="../images/icon-cart.svg" alt="icon-cart"/>
-                            <span className='ms-2'>Add to cart</span>
-                          </div>
+                          
+                            <div className='addtocart ms-5 text-center pt-2 rounded' onClick= {() => addtocart(data.title,data.price,data.category,data.image,n)}>
+                              <img src="../images/icon-cart.svg" alt="icon-cart"/>
+                              <span className='ms-2'>Add to cart</span>
+                            </div>
                       </div>
                       <div className='mt-2 mb-5'>
                         <span>Free delivery <br/> by {delday}, {date} {delmonth} if orders within 8hrs,7mins</span>

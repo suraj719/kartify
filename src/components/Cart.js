@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react'
-// import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import './home.css'
 export default function Cart() {
-    
-      // const item = useSelector((state) => state.item)
      let items = JSON.parse(localStorage.getItem("items"))
     
     const [data, setData] = useState([])
@@ -19,8 +16,17 @@ export default function Cart() {
     function delitem(itemid) {
       items = items.filter((i) => i.id !== parseInt(itemid))
       localStorage.setItem("items", JSON.stringify(items));
-      window.location.reload(false);
-    }
+        totalqty = items.reduce((acc,i) => {
+        return acc+i.quantity
+        },0)
+        totalprice = items.reduce((acc,i) => {
+          return acc+((i.quantity) * (i.price))
+        },0)
+        document.querySelector('.cntitems').innerHTML=`${totalqty}`
+        
+        document.getElementById(`${itemid}`).innerHTML=""
+        document.querySelector('.grand-price').innerHTML=`Subtotal (${totalqty} items): $${totalprice.toFixed(2)}` 
+   } 
   useEffect(() => {
     fetch('https://fakestoreapi.com/products/category/electronics').then(json =>{
           return json.json()
@@ -41,7 +47,7 @@ export default function Cart() {
           
           return (
               
-            <div key={it.id}>
+            <div key={it.id} id={it.id}>
               <div className='cart-item mx-5'>
                 <div>
                     <img src={it.image} alt="cart-item-img" className='cart-img' style={{height:"10rem",width:"10rem"}}/>
@@ -50,7 +56,7 @@ export default function Cart() {
                       <h5 className='card-title'>{it.title}</h5>
                       <p><span className='best-seller'>#1 Best Seller</span> in {it.category}</p>
                       <span className='text-success'>In stock</span>
-                      <div className='d-flex'>
+                      <div className='d-flex qty'>
                         <select>
                           <option>Qty: {it.quantity}</option>
                           <option>1</option>
@@ -59,7 +65,7 @@ export default function Cart() {
                           <option>4</option>
                           <option>5</option>
                         </select>
-                        <span className='ms-3 delitem' onClick={() => delitem(it.id)}>Delete</span>
+                        <span className='ms-3 delitem' onClick={() => delitem(it.id)}><img src="../images/icon-delete.svg" alt="icon-del" className='mb-1'/> Delete</span>
                       </div>
                       <p className='card-text'>
                         price: ${it.price}
@@ -76,7 +82,7 @@ export default function Cart() {
       </div>
       <div className='grand mx-5'>
         <div className='grand-text ms-2 mb-3 mt-3 me-5'>
-          <h5>Subtotal ({totalqty} items): ${Math.ceil(totalprice)}</h5>
+          <h5 className='grand-price'>Subtotal ({totalqty} items): ${totalprice.toFixed(2)}</h5>
           <button className='proceed mt-3'>
             Proceed to Buy
           </button>

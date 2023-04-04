@@ -74,14 +74,19 @@ a {
     margin-left: 27px;
     margin-bottom: -15px;
 }
+
 @media only screen and (max-width: 768px) {
     .navbar-brand {
         max-width: 100% !important;
         margin: auto !important;
     }
     .rytitems {
-        max-width: 100%;
-        margin:auto;
+        position: absolute;
+        top:18px;
+        left: 67%;
+    }
+    .userimg {
+        display: none;
     }
     .cart{
         display: block;
@@ -90,6 +95,10 @@ a {
         width: 90%;
         display: block;
         text-align: center;
+        margin: 0 !important;
+    }
+    .qty {
+        margin-left: 100px;
     }
     .cart-img {
         align-items: center;
@@ -108,6 +117,9 @@ a {
     .proceed {
         width: 50%;
         
+    }
+    .no-items {
+        display: block !important;
     }
 }
 

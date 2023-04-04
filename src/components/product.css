@@ -93,11 +93,13 @@
 }
 .top-img > img {
     width: 98%;
-    margin:5px 10px;
+    margin:50px 10px 0 20px;
     border-radius: 40px;
 }
 @media only screen and (max-width: 600px) {
-    
+    .pro-card {
+        margin-left: 0 !important;
+    }
     .details {
         margin-left: 10px;
     }
@@ -113,7 +115,8 @@
     .tb > img {
         width: 4.5em;
     }
-    /* .top-img > img {
-        display: none;
-    } */
+    .top-img > img {
+        margin:10px 0 10px;
+        height: 12rem;
+    }
 }
