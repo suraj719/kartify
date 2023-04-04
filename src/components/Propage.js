@@ -31,7 +31,14 @@ export default function Propage() {
     },0)
       localStorage.setItem('items',JSON.stringify(items))
         setN(1);
-        window.location.reload(false);
+      document.querySelector('.cntitems').innerHTML=`${totalqty}`
+      if(n===1) {
+        swal(`${n} item added to cart`, "Go to cart to checkout", "success")
+      }
+      else {
+        swal(`${n} items added to cart`, "Go to cart to checkout", "success");
+      }
+      setN(1);
   }
   function decre() {
         if(n>1) {
