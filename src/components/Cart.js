@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { removeItem } from '../redux/cartReducer';
 import './home.css'
 export default function Cart() {
-    const dispatch = useDispatch();
-    //  let items = JSON.parse(localStorage.getItem("items")) || []
-    const items = useSelector(state=>state.cart.products)
+     let items = JSON.parse(localStorage.getItem("items")) || []
+    
     const [data, setData] = useState([])
 
     var totalqty = items.reduce((acc,i) => {
@@ -17,19 +14,18 @@ export default function Cart() {
     },0)
     
     function delitem(itemid) {
-      dispatch(removeItem({id:itemid}))
-      // items = items.filter((i) => i.id !== parseInt(itemid))
-      // localStorage.setItem("items", JSON.stringify(items));
-      //   totalqty = items.reduce((acc,i) => {
-      //   return acc+i.quantity
-      //   },0)
-      //   totalprice = items.reduce((acc,i) => {
-      //     return acc+((i.quantity) * (i.price))
-      //   },0)
-      //   document.querySelector('.cntitems').innerHTML=`${totalqty}`
+      items = items.filter((i) => i.id !== parseInt(itemid))
+      localStorage.setItem("items", JSON.stringify(items));
+        totalqty = items.reduce((acc,i) => {
+        return acc+i.quantity
+        },0)
+        totalprice = items.reduce((acc,i) => {
+          return acc+((i.quantity) * (i.price))
+        },0)
+        document.querySelector('.cntitems').innerHTML=`${totalqty}`
         
-      //   document.getElementById(`${itemid}`).innerHTML=""
-      //   document.querySelector('.grand-price').innerHTML=`Subtotal (${totalqty} items): $${totalprice.toFixed(2)}` 
+        document.getElementById(`${itemid}`).innerHTML=""
+        document.querySelector('.grand-price').innerHTML=`Subtotal (${totalqty} items): $${totalprice.toFixed(2)}` 
    } 
   useEffect(() => {
     fetch('https://fakestoreapi.com/products/category/electronics').then(json =>{
@@ -61,7 +57,14 @@ export default function Cart() {
                       <p><span className='best-seller'>#1 Best Seller</span> in {it.category}</p>
                       <span className='text-success'>In stock</span>
                       <div className='d-flex qty'>
-                        <p className='fw-semibold'>Qty: {it.quantity}</p>
+                        <select>
+                          <option>Qty: {it.quantity}</option>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
                         <span className='ms-3 delitem' onClick={() => delitem(it.id)}><img src="../images/icon-delete.svg" alt="icon-del" className='mb-1'/> Delete</span>
                       </div>
                       <p className='card-text'>
