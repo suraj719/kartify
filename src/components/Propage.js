@@ -1,37 +1,47 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom'
 import swal from 'sweetalert';
+import { addToCart } from '../redux/cartReducer';
 import './product.css'
 export default function Propage() {
+  const dispatch = useDispatch();
   const location = useLocation();
   const data = location.state.data
   var tnurl1,tnurl2,tnurl3;
   let [n,setN] = useState(1)
   let [image,setImage] = useState(1)
-  let items = JSON.parse(localStorage.getItem("items")) || [];
-  var totalqty = items.reduce((acc,i) => {
-    return acc+i.quantity
-},0)
+  // let items = JSON.parse(localStorage.getItem("items")) || [];
+//   var totalqty = items.reduce((acc,i) => {
+//     return acc+i.quantity
+// },0)
 
-  function addtocart(title,price,category,image,quantity) {
-   
-       items = [
-          ...items,
-          {
-              id: new Date().getTime(),
-              title:title,
-              price:price,
-              category:category,
-              image:image,
-              quantity:quantity,
-          }
-       ]
-       totalqty = items.reduce((acc,i) => {
-        return acc+i.quantity
-    },0)
-      localStorage.setItem('items',JSON.stringify(items))
-        setN(1);
-      document.querySelector('.cntitems').innerHTML=`${totalqty}`
+  function addtocart(id,title,price,category,image,quantity) {
+    dispatch(addToCart({
+      id:id,
+      title:title,
+      price:price,
+      category:category,
+      image:image,
+      quantity:quantity
+    }))
+    //    items = [
+    //       ...items,
+    //       {
+    //           id: new Date().getTime(),
+    //           title:title,
+    //           price:price,
+    //           category:category,
+    //           image:image,
+    //           quantity:quantity,
+    //       }
+    //    ]
+    //    totalqty = items.reduce((acc,i) => {
+    //     return acc+i.quantity
+    // },0)
+    //   localStorage.setItem('items',JSON.stringify(items))
+    //     setN(1);
+    //   document.querySelector('.cntitems').innerHTML=`${totalqty}`
       if(n===1) {
         swal(`${n} item added to cart`, "Go to cart to checkout", "success")
       }
@@ -133,7 +143,7 @@ export default function Propage() {
                             </div>
                        
                           
-                            <div className='addtocart ms-5 text-center pt-2 rounded' onClick= {() => addtocart(data.title,data.price,data.category,data.image,n)}>
+                            <div className='addtocart ms-5 text-center pt-2 rounded' onClick= {() => addtocart(data.id,data.title,data.price,data.category,data.image,n)}>
                               <img src="../images/icon-cart.svg" alt="icon-cart"/>
                               <span className='ms-2'>Add to cart</span>
                             </div>
