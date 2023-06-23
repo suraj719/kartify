@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './product.css'
-import axios from "axios"
+// import axios from "axios"
 export default function Electronics() {
     const [data, setData] = useState([])
     useEffect(() => {

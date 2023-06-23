@@ -1,6 +1,5 @@
-nav {
+/* nav {
     background-color: rgba(0, 0, 0, 0.5);
-    /* background-color: rgb(99, 81, 206,0.8); */
 }
 .navbar-nav > li > a {
     text-decoration: none;
@@ -122,4 +121,30 @@ a {
         display: block !important;
     }
 }
+ */
 
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+}
+.nav-link a {
+    font-size: 17px;
+    color:black;
+    text-decoration: none;
+}
+.home-text {
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 90px;
+}
+.txt-1 {
+    background-color: white;
+    padding-left:5px;
+    transform: rotate(-2.002deg);
+}
+.txt-2 {
+    background-color: #EBD96B;
+    padding-left:5px;
+    transform: rotate(-1.002deg);
+}
