@@ -5,33 +5,45 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const signIn = useSignIn();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [signloading,setsign] = useState(false)
+  const [signloading, setsign] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const SignupHandler = (e) => {
+  const [errormsg, setErrormsg] = useState("");
+  const url = process.env.REACT_APP_BACKEND_URL;
+  const SignupHandler = async (e) => {
     e.preventDefault();
-    setsign(true)
-    axios
-      .post("http://localhost:5000/api/v1/users/login", {
-        username: username,
-        password: password,
-      })
-      .then((res) => {
-        if (
-          signIn({
-            token: res.data.token,
-            expiresIn: 3600,
-            tokenType: "Bearer",
-            authState: { username: username },
-          })
-        ) {
-          navigate("/");
-        } else {
-          console.log("failed to login");
-        }
-      });
+    setsign(true);
+    setErrormsg("please wait, we are trying to logging you in!");
+    try {
+      await axios
+        .post(`${url}/api/v1/users/login`, {
+          username: username,
+          password: password,
+        })
+        .then((res) => {
+          console.log(res);
+          if (
+            signIn({
+              token: res.data.token,
+              expiresIn: 3600,
+              tokenType: "Bearer",
+              authState: { username: username },
+            })
+          ) {
+            navigate("/");
+          } else {
+            setsign(false)
+            console.log("failed to login");
+            setErrormsg("failed to login, please try again!")
+          }
+        });
+    } catch (error) {
+      console.log(error);
+      setErrormsg(error.response.data);
+      setsign(false);
+    }
   };
   return (
     <div>
@@ -57,6 +69,15 @@ export default function Login() {
                   </div>
                   <div className="col-md-6 col-lg-7 d-flex align-items-center">
                     <div className="card-body p-4 p-lg-5 text-black">
+                      {errormsg ? (
+                        <>
+                          <div className="alert alert-warning" role="alert">
+                            <div>{errormsg}</div>
+                          </div>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                       <form onSubmit={SignupHandler}>
                         <div className="align-items-center mb-3 pb-1 d-none d-md-flex">
                           <img
@@ -102,30 +123,36 @@ export default function Login() {
                                 setShowPassword((showPassword) => !showPassword)
                               }
                             >
-                              {showPassword ? <i class="fa-solid fa-eye-slash"></i>: <i className="fa-solid fa-eye"></i>}
-                              
+                              {showPassword ? (
+                                <i className="fa-solid fa-eye-slash"></i>
+                              ) : (
+                                <i className="fa-solid fa-eye"></i>
+                              )}
                             </span>
                           </div>
                           <label className="form-label">Password</label>
                         </div>
                         <div className="pt-1 mb-4">
-                        {signloading ? 
-                        <>
-                          <button
-                            className="btn btn-dark btn-lg btn-block"
-                            type="submit"
-                            disabled
-                          >
-                            Login
-                          </button>
-                        </>:<>
-                        <button
-                            className="btn btn-dark btn-lg btn-block"
-                            type="submit"
-                          >
-                            Login
-                          </button>
-                        </>}
+                          {signloading ? (
+                            <>
+                              <button
+                                className="btn btn-dark btn-lg btn-block"
+                                type="submit"
+                                disabled
+                              >
+                                Login
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                className="btn btn-dark btn-lg btn-block"
+                                type="submit"
+                              >
+                                Login
+                              </button>
+                            </>
+                          )}
                         </div>
                         <p
                           className="mb-5 pb-lg-2 d-flex"

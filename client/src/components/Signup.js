@@ -3,26 +3,30 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [signloading,setsign] = useState(false)
+  const [signloading, setsign] = useState(false);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errormsg,setErrormsg] = useState("")
+  const url = process.env.REACT_APP_BACKEND_URL;
   const SignupHandler = async (e) => {
+    setsign(true);
+    setErrormsg("please wait, we are creating your account!")
     e.preventDefault();
     try {
-      setsign(true)
-      axios.post("http://localhost:5000/api/v1/users/signup", {
+      await axios.post(`${url}/api/v1/users/signup`, {
         username: username,
         email: email,
         password: password,
       });
-      setsign(false)
-      navigate("/login")
+      navigate("/login");
     } catch (error) {
       console.log(error);
+      setErrormsg(error.response.data)
     }
+    setsign(false);
   };
   return (
     <div>
@@ -48,6 +52,14 @@ export default function Signup() {
                   </div>
                   <div className="col-md-6 col-lg-7 d-flex align-items-center">
                     <div className="card-body p-4 p-lg-5 text-black">
+                    {errormsg ? <>
+                      <div
+                        className="alert alert-warning"
+                        role="alert"
+                      >
+                        <div>{errormsg}</div>
+                      </div>
+                      </>:<></>}
                       <form onSubmit={SignupHandler}>
                         <div className="align-items-center mb-3 pb-1 d-none d-md-flex">
                           <img
@@ -103,30 +115,36 @@ export default function Signup() {
                                 setShowPassword((showPassword) => !showPassword)
                               }
                             >
-                              {showPassword ? <i class="fa-solid fa-eye-slash"></i>: <i className="fa-solid fa-eye"></i>}
-                              
+                              {showPassword ? (
+                                <i className="fa-solid fa-eye-slash"></i>
+                              ) : (
+                                <i className="fa-solid fa-eye"></i>
+                              )}
                             </span>
                           </div>
                           <label className="form-label">Password</label>
                         </div>
                         <div className="pt-1 mb-4">
-                        {signloading ? 
-                        <>
-                          <button
-                            className="btn btn-dark btn-lg btn-block"
-                            type="submit"
-                            disabled
-                          >
-                            Signup
-                          </button>
-                        </>:<>
-                        <button
-                            className="btn btn-dark btn-lg btn-block"
-                            type="submit"
-                          >
-                            Signup
-                          </button>
-                        </>}
+                          {signloading ? (
+                            <>
+                              <button
+                                className="btn btn-dark btn-lg btn-block"
+                                type="submit"
+                                disabled
+                              >
+                                Signup
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                className="btn btn-dark btn-lg btn-block"
+                                type="submit"
+                              >
+                                Signup
+                              </button>
+                            </>
+                          )}
                         </div>
                         <p
                           className="mb-5 pb-lg-2 d-flex"

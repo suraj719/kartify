@@ -1,7 +1,6 @@
 import React from 'react'
 import './home.css'
 import Products from './Products'
-
 export default function Home() {
     return (
         <div className=''>
@@ -11,7 +10,6 @@ export default function Home() {
                         <p className='txt-1'>EXPLORE</p>
                         <p>DISCOVER</p>
                         <p className='txt-2'>BUY IT!</p>
-                        {/* <p>ITEMS</p> */}
                     </div>
                     <p className='fw-semibold fs-6'>KARTIFY, Your Ultimate Online Retail Destination!</p>
                     <button className='btn btn-dark px-3'>SHOP NOW</button>
