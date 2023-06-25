@@ -23,7 +23,6 @@ export default function Login() {
           password: password,
         })
         .then((res) => {
-          console.log(res);
           if (
             signIn({
               token: res.data.token,
