@@ -1,21 +1,19 @@
 import React from "react";
-// import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import "./home.css";
 export default function Navbar() {
-  // const items = useSelector((state) => state.cart.products);
-  // const totalqty = items.length;
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary px-4">
         <div className="container-fluid">
           <div className="navbar-brand">
             <Link to={"/"}>
-              <img
-                src="../images/logo-full.png"
+              {/* <img
+                src="../images/logoj.png"
                 alt="brand-logo"
-                style={{ width: "8rem" }}
-              />
+                style={{ width: "11rem" , height:"3rem"}}
+              /> */}
+              <p className="fw-bold text-dark fs-3" style={{fontFamily:"'Great Vibes', cursive"}}>KARTIFY</p>
             </Link>
           </div>
           <button
@@ -44,15 +42,18 @@ export default function Navbar() {
                 <Link to="/jewellery">Jewellery</Link>
               </li>
               <li className="nav-item nav-link">
-                {/* <div className="cntitems">{totalqty}</div> */}
+              <Link to="/cart">
                 <i
-                  class="fa-solid fa-cart-shopping fa-xl"
+                  className="fa-solid fa-cart-shopping fa-lg"
                   style={{ color: "black" }}
                 ></i>
+              </Link>
               </li>
+            <Link to="/signup">
               <li className="nav-item nav-lin">
                 <button className="btn btn-dark px-3 py-2">Sign In</button>
               </li>
+            </Link>
             </ul>
           </div>
         </div>

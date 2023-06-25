@@ -1,21 +1,11 @@
-/* nav {
-    background-color: rgba(0, 0, 0, 0.5);
-}
+
 .navbar-nav > li > a {
     text-decoration: none;
-    color: whitesmoke;
-    font-size: 22px;
+    font-size: 18px;
 }
 .navbar-nav > li > a:hover {
-    border-bottom: 2px solid salmon;
+    border-bottom: 2px solid rgb(227, 52, 32);
 }
-.navbar-brand {
-    margin-top: 0;
-}
-body {
-    background-color: #eaeded;
-}
-
 .socials > i {
     margin-left: 12px;
 }
@@ -75,17 +65,11 @@ a {
 }
 
 @media only screen and (max-width: 768px) {
-    .navbar-brand {
-        max-width: 100% !important;
-        margin: auto !important;
+    body {
+        overflow-x: hidden;
     }
-    .rytitems {
-        position: absolute;
-        top:18px;
-        left: 67%;
-    }
-    .userimg {
-        display: none;
+     .navbar-brand {
+        padding-top: 20px;
     }
     .cart{
         display: block;
@@ -121,9 +105,6 @@ a {
         display: block !important;
     }
 }
- */
-
-
 body {
     font-family: 'Poppins', sans-serif;
     font-weight: 500;

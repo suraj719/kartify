@@ -9,6 +9,9 @@ import Electronics from './components/Electronics';
 import Jewellery from './components/Jewellery';
 import Footer from './components/Footer';
 import Cart from './components/Cart';
+import Signup from './components/Signup';
+import Login from './components/Login';
+
 function App() {
   return (
     <div className="">
@@ -21,6 +24,9 @@ function App() {
                 <Route path='/jewellery' element={<Jewellery/>}  />
                 <Route path='products/:id' element={<Propage />}/>
                 <Route path='/cart' element={<Cart />} />
+                <Route path='/signup' element={<Signup />} />
+                <Route path='/login' element={<Login />} />
+
         </Routes>
         <Footer />
     </div>
