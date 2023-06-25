@@ -39,7 +39,7 @@ export default function Women() {
                     style={{ width: "20rem", height: "25rem" }}
                   >
                     <div className="top-d">
-                      <span className="top-price">${pro.price}</span>
+                      <span className="top-price">₹{pro.price}</span>
                       <i className="fa-regular fa-heart"></i>
                     </div>
                     <img

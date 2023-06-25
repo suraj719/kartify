@@ -1,4 +1,4 @@
-<a href="https://kartify7.netlify.app/">Click here to view the project</a>
+<a href="https://kartify7.vercel.app/">Click here to view the project</a>
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -30,6 +30,25 @@ export default function Cart() {
         setData(data);
       });
   }, []);
+  const handlecheckout = async () => {
+    fetch("http://localhost:5000/create-checkout-session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body:JSON.stringify(items),
+    })
+      .then(res => {
+        if (res.ok) return res.json()
+        return res.json().then(json => Promise.reject(json))
+      })
+      .then(({ url }) => {
+        window.location = url
+      })
+      .catch(e => {
+        console.error(e.error)
+      })
+  }
   return (
     <div className="">
     {isloggedin ? <>
@@ -70,7 +89,7 @@ export default function Cart() {
                           Delete
                         </span>
                       </div>
-                      <p className="card-text fw-semibold">price: ${it.price}*{it.quantity} = ${it.price * it.quantity}</p>
+                      <p className="card-text fw-semibold">price: ₹{it.price}*{it.quantity} = ₹{it.price * it.quantity}</p>
                     </div>
                   </div>
                   <hr className="mx-5" />
@@ -81,9 +100,9 @@ export default function Cart() {
           <div className="grand mx-5">
             <div className="grand-text ms-2 mb-3 mt-3 me-2">
               <h5 className="grand-price fw-bold">
-                Subtotal ({totalqty} items): ${totalprice.toFixed(2)}
+                Subtotal ({totalqty} items): ₹{totalprice.toFixed(2)}
               </h5>
-              <button className="proceed mt-3">Proceed to Buy</button>
+              <button className="proceed mt-3" onClick={handlecheckout}>Proceed to Buy</button>
             </div>
           </div>
         </div>
@@ -131,7 +150,7 @@ export default function Cart() {
                 style={{ width: "20rem", height: "25rem" }}
               >
                 <div className="top-d">
-                  <span className="top-price">${pro.price}</span>
+                  <span className="top-price">₹{pro.price}</span>
                   <i className="fa-regular fa-heart"></i>
                 </div>
                 <img

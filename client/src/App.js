@@ -11,6 +11,8 @@ import Footer from './components/Footer';
 import Cart from './components/Cart';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import Success from './components/Success';
+import Cancel from './components/Cancel';
 
 function App() {
   return (
@@ -26,7 +28,8 @@ function App() {
                 <Route path='/cart' element={<Cart />} />
                 <Route path='/signup' element={<Signup />} />
                 <Route path='/login' element={<Login />} />
-
+                <Route path='/success'element={<Success />}></Route>
+                <Route path='/cancel'element={<Cancel />}></Route>
         </Routes>
         <Footer />
     </div>

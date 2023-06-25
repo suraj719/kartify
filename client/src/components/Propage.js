@@ -88,12 +88,12 @@ export default function Propage() {
             <p className="mt-2 fs-2 fw-bold">{data.title}</p>
             <p className="fw-semibold fs-6">{data.description}</p>
             <div className="d-flex mt-1">
-              <h2>${data.price}</h2>
+              <h2>₹{data.price}</h2>
               <h4 className="ms-4 priceoff">50%</h4>
             </div>
             <div className="d-flex align-items-center">
               <p className="text-decoration-line-through text-muted">
-                ${data.price * 2}
+              ₹{data.price * 2}
               </p>
               <div
                 className="ms-3 d-flex align-items-center gap-1"
