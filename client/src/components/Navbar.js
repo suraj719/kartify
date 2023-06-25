@@ -1,19 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
+import { useIsAuthenticated } from "react-auth-kit";
+import { useSignOut } from "react-auth-kit";
 export default function Navbar() {
+  const isAuthenticated = useIsAuthenticated();
+  const logout = useSignOut();
+  let isloggedin = isAuthenticated();
   return (
     <div>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary px-4">
+      <nav
+        className="navbar navbar-expand-lg bg-body-tertiary px-4"
+        style={{
+          boxShadow: "0 2px 4px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.08)",
+        }}
+      >
         <div className="container-fluid">
-          <div className="navbar-brand">
+          <div className="navbar-bran d-flex align-items-center">
             <Link to={"/"}>
-              {/* <img
-                src="../images/logoj.png"
-                alt="brand-logo"
-                style={{ width: "11rem" , height:"3rem"}}
-              /> */}
-              <p className="fw-bold text-dark fs-3" style={{fontFamily:"'Great Vibes', cursive"}}>KARTIFY</p>
+              <p
+                className="fw-bold text-dark fs-3"
+                style={{ fontFamily: "'Great Vibes', cursive" }}
+              >
+                <img
+                  className="me"
+                  src="../images/shopping-bag.png"
+                  alt="logo"
+                  style={{ width: "2.5rem", marginTop: "-10px" }}
+                ></img>
+                <span>KARTIFY</span>
+              </p>
             </Link>
           </div>
           <button
@@ -42,18 +58,33 @@ export default function Navbar() {
                 <Link to="/jewellery">Jewellery</Link>
               </li>
               <li className="nav-item nav-link">
-              <Link to="/cart">
-                <i
-                  className="fa-solid fa-cart-shopping fa-lg"
-                  style={{ color: "black" }}
-                ></i>
-              </Link>
+                <Link to="/cart">
+                  <i
+                    className="fa-solid fa-cart-shopping fa-lg"
+                    style={{ color: "black" }}
+                  ></i>
+                </Link>
               </li>
-            <Link to="/signup">
-              <li className="nav-item nav-lin">
-                <button className="btn btn-dark px-3 py-2">Sign In</button>
-              </li>
-            </Link>
+              {isloggedin ? (
+                <>
+                  <button
+                    className="btn btn-dark px-3 py-2"
+                    onClick={() => logout()}
+                  >
+                    Sign out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login">
+                    <li className="nav-item nav-lin">
+                      <button className="btn btn-dark px-3 py-2">
+                        Sign In
+                      </button>
+                    </li>
+                  </Link>
+                </>
+              )}
             </ul>
           </div>
         </div>

@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { removeItem } from "../redux/cartReducer";
+import {useIsAuthenticated} from 'react-auth-kit';
 import "./home.css";
 export default function Cart() {
+  const isAuthenticated = useIsAuthenticated()
+  let isloggedin = isAuthenticated()
   const dispatch = useDispatch();
-  //  let items = JSON.parse(localStorage.getItem("items")) || []
   const items = useSelector((state) => state.cart.products);
   const [data, setData] = useState([]);
 
@@ -30,6 +32,7 @@ export default function Cart() {
   }, []);
   return (
     <div className="">
+    {isloggedin ? <>
       {items.length > 0 ? (
         <div className="cart">
           <div className="cart-items ms-5">
@@ -101,7 +104,23 @@ export default function Cart() {
           </div>
         </div>
       )}
-
+</> :<>
+<div>
+          <div className="no-items ms-5 mt-5 d-flex align-items-center justify-content-center">
+            <img
+              src="../images/nocart.gif"
+              alt="no-items img"
+              style={{ height: "20rem" }}
+            />
+            <div className="mt-3 ms-5">
+              <h4 className="mb-">Please login to your accout to see your cart</h4>
+              <Link to="/login">
+                <button className="pro btn btn-dark">Login</button>
+              </Link>
+            </div>
+          </div>
+        </div>
+</>}
       <h4 className="ms-5 mt-5">Recommended based on your shopping trends</h4>
       <div className="d-flex flex-wrap page justify-content-evenly">
         {data.map((pro) => {

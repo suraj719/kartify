@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import { addToCart } from "../redux/cartReducer";
+import {useIsAuthenticated} from 'react-auth-kit';
 import "./product.css";
 export default function Propage() {
+  const navigate = useNavigate()
+  const isAuthenticated = useIsAuthenticated()
+  let isloggedin = isAuthenticated()
   const dispatch = useDispatch();
   const location = useLocation();
   const data = location.state.data;
   let [n, setN] = useState(1);
   function addtocart(id, title, price, category, image, quantity) {
+  if(isloggedin) {
     dispatch(
       addToCart({
         id: id,
@@ -26,6 +31,9 @@ export default function Propage() {
       swal(`${n} items added to cart`, "Go to cart to checkout", "success");
     }
     setN(1);
+  } else {
+    navigate("/login")
+  }
   }
   function decre() {
     if (n > 1) {
