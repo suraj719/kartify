@@ -45,6 +45,9 @@ export default function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav gap-4 ms-auto mb-lg-0">
+            <li className="nav-item nav-link">
+                <Link to="/home">Home</Link>
+              </li>
               <li className="nav-item nav-link">
                 <Link to="/men">Men</Link>
               </li>

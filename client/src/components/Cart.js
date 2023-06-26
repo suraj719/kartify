@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { removeItem } from "../redux/cartReducer";
 import {useIsAuthenticated} from 'react-auth-kit';
 import "./home.css";
+import Loader from "./Loader";
 export default function Cart() {
   const isAuthenticated = useIsAuthenticated()
   let isloggedin = isAuthenticated()
@@ -11,6 +12,8 @@ export default function Cart() {
   const items = useSelector((state) => state.cart.products);
   const [data, setData] = useState([]);
   const url = process.env.REACT_APP_BACKEND_URL;
+  const [isloading, setIsloading] = useState(false);
+
 
   var totalqty = items.reduce((acc, i) => {
     return acc + i.quantity;
@@ -32,7 +35,8 @@ export default function Cart() {
       });
   }, []);
   const handlecheckout = async () => {
-    fetch(`${url}/create-checkout-session`, {
+    setIsloading(true)
+    await fetch(`${url}/create-checkout-session`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +48,9 @@ export default function Cart() {
         return res.json().then(json => Promise.reject(json))
       })
       .then(({ url }) => {
-        window.location = url
+        // window.location = url
+        window.location.replace(url)
+        setIsloading(false)
       })
       .catch(e => {
         console.error(e.error)
@@ -52,6 +58,7 @@ export default function Cart() {
   }
   return (
     <div className="">
+  {isloading ? <><Loader/></>:<>
     {isloggedin ? <>
       {items.length > 0 ? (
         <div className="cart">
@@ -166,6 +173,7 @@ export default function Cart() {
           );
         })}
       </div>
+      </>}
     </div>
   );
 }

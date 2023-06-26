@@ -12,7 +12,7 @@ export default function Success() {
     button: "Shop more!",
   }).then((val) => {
     dispatch(resetCart())
-    navigate("/")
+    navigate("/home")
   })
   return (
     <div style={{height:"60vh"}}>
