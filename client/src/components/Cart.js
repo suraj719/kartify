@@ -10,6 +10,7 @@ export default function Cart() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.cart.products);
   const [data, setData] = useState([]);
+  const url = process.env.REACT_APP_BACKEND_URL;
 
   var totalqty = items.reduce((acc, i) => {
     return acc + i.quantity;
@@ -31,7 +32,7 @@ export default function Cart() {
       });
   }, []);
   const handlecheckout = async () => {
-    fetch("http://localhost:5000/create-checkout-session", {
+    fetch(`${url}/create-checkout-session`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
